@@ -90,4 +90,4 @@ The `testcases/` directory contains 40 scrambles (`scramble01.txt`–`scramble40
 
 ---
 
-*Originally developed as a project for SFU CMPT 225 (Data Structures & Algorithms).*
+*SFU CMPT 225 (Data Structures & Algorithms) Fall 2025*
