@@ -8,6 +8,23 @@ The solver reads a scrambled cube from a text file (described as a flat sticker 
 
 The final output is a normalized sequence of basic face turns (`U R F D L B`).
 
+## Project structure
+
+```
+src/rubikscube/
+├── Solver.java          # Entry point: read → toCubie → Phase1 → Phase2 → output
+├── RubiksCube.java      # Sticker-level model + file parsing
+├── CubieCube.java       # Cubie-level model (permutation + orientation, coordinates)
+├── Phase1Solver.java    # IDA* search for Phase 1
+├── Phase1Tables.java    # Phase 1 move-transition tables
+├── Phase1Prune1D.java   # Phase 1 pruning (pattern) tables via BFS
+├── Phase2Solver.java    # IDA* search for Phase 2
+├── Phase2Tables.java    # Phase 2 move-transition tables
+├── Phase2Prune1D.java   # Phase 2 pruning tables
+└── IncorrectFormatException.java
+testcases/               # 40 scrambles with expected solutions
+```
+
 ## Algorithm
 
 The solve is split into Kociemba's two phases, each operating on a reduced coordinate space:
@@ -28,22 +45,6 @@ This project was a study in using the right data structure for the job:
 - **Admissible heuristic** — the per-state lower bound is `max(EO, CO, Slice)` distances, which keeps IDA\* optimal while pruning the search tree aggressively.
 - **Cubie model** (`CubieCube`) — encodes corner/edge permutation and orientation, decoupling the search logic from the raw sticker representation.
 
-## Project structure
-
-```
-src/rubikscube/
-├── Solver.java          # Entry point: read → toCubie → Phase1 → Phase2 → output
-├── RubiksCube.java      # Sticker-level model + file parsing
-├── CubieCube.java       # Cubie-level model (permutation + orientation, coordinates)
-├── Phase1Solver.java    # IDA* search for Phase 1
-├── Phase1Tables.java    # Phase 1 move-transition tables
-├── Phase1Prune1D.java   # Phase 1 pruning (pattern) tables via BFS
-├── Phase2Solver.java    # IDA* search for Phase 2
-├── Phase2Tables.java    # Phase 2 move-transition tables
-├── Phase2Prune1D.java   # Phase 2 pruning tables
-└── IncorrectFormatException.java
-testcases/               # 40 scrambles with expected solutions
-```
 
 ## Input format
 
